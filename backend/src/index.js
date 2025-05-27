@@ -11,9 +11,12 @@ const __dirname = path.resolve();
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/dist")));
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
+  // Express 5.x: use an explicit regex for catch-all
+  app.get(/(.*)/, (req, res) => {
+    // `req.params[0]` will contain the path
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
   });
+
 }
 
 server.listen(PORT, () => {
