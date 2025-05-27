@@ -1,9 +1,25 @@
 import { Server } from "socket.io";
 import http from "http";
 import express from "express";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import authRoutes from "../routes/auth.route.js";
+import messageRoutes from "../routes/message.route.js";
 
 const app = express();
 const server = http.createServer(app);
+
+// Set up middlewares here
+app.use(express.json());
+app.use(cookieParser());
+app.use(cors({
+  origin: ["http://localhost:5173"],
+  credentials: true,
+}));
+
+// Register routes here
+app.use("/api/auth", authRoutes);
+app.use("/api/messages", messageRoutes);
 
 const io = new Server(server, {
   cors: {
@@ -11,12 +27,8 @@ const io = new Server(server, {
   },
 });
 
-export function getReceiverSocketId(userId) {
-  return userSocketMap[userId];
-}
-
-// used to store online users
-const userSocketMap = {}; // {userId: socketId}
+// Store online users
+const userSocketMap = {}; // { userId: socketId }
 
 io.on("connection", (socket) => {
   console.log("A user connected", socket.id);
@@ -24,7 +36,6 @@ io.on("connection", (socket) => {
   const userId = socket.handshake.query.userId;
   if (userId) userSocketMap[userId] = socket.id;
 
-  // io.emit() is used to send events to all the connected clients
   io.emit("getOnlineUsers", Object.keys(userSocketMap));
 
   socket.on("disconnect", () => {
@@ -33,5 +44,9 @@ io.on("connection", (socket) => {
     io.emit("getOnlineUsers", Object.keys(userSocketMap));
   });
 });
+
+export function getReceiverSocketId(userId) {
+  return userSocketMap[userId];
+}
 
 export { io, app, server };
