@@ -9,7 +9,9 @@ import messageRoutes from "../routes/message.route.js";
 const app = express();
 const server = http.createServer(app);
 
-// Set up middlewares here
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
