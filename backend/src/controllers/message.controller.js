@@ -37,10 +37,11 @@ export const getMessages = async (req, res) => {
 
 export const sendMessage = async (req, res) => {
   try {
+    console.log({params: req.params})
     const { text, image } = req.body;
     const { id: receiverId } = req.params;
     const senderId = req.user._id;
-
+    
     let imageUrl;
     if (image) {
       // Upload base64 image to cloudinary
@@ -61,7 +62,6 @@ export const sendMessage = async (req, res) => {
     if (receiverSocketId) {
       io.to(receiverSocketId).emit("newMessage", newMessage);
     }
-
     res.status(201).json(newMessage);
   } catch (error) {
     console.log("Error in sendMessage controller: ", error.message);

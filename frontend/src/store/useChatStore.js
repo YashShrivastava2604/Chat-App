@@ -24,7 +24,7 @@ export const useChatStore = create((set, get) => ({
 
   getMessages: async (userId) => {
     set({ isMessagesLoading: true });
-    if (!userId) {
+    if (!userId.trim()) {
       toast.error("User ID is missing or invalid.");
       set({ isMessagesLoading: false });
       return;
