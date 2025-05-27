@@ -23,13 +23,17 @@ export const useChatStore = create((set, get) => ({
   },
 
   getMessages: async (userId) => {
-    if (!userId) return;
     set({ isMessagesLoading: true });
+    if (!userId) {
+      toast.error("User ID is missing or invalid.");
+      set({ isMessagesLoading: false });
+      return;
+    }
     try {
       const res = await axiosInstance.get(`/messages/${userId}`);
       set({ messages: res.data });
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "Failed to fetch messages.");
     } finally {
       set({ isMessagesLoading: false });
     }
