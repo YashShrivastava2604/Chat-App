@@ -143,7 +143,7 @@ export default function SignUpPage() {
 
             <button
               type="submit"
-              className="btn btn-primary w-full"
+              className="btn btn-primary w-full z-12"
               disabled={isSigningUp}
             >
               {isSigningUp ? (
