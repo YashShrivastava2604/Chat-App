@@ -65,7 +65,16 @@ const ChatContainer = () => {
                       : selectedUser.profilePic || "/avatar.png"
                   }
                   alt="profile pic"
+                  className="object-cover size-10 rounded-full"
+                  style={{
+                    objectPosition:
+                      message.senderId === authUser?._id
+                        ? authUser.profilePicPosition || "center"
+                        : selectedUser.profilePicPosition || "center"
+                  }}
                 />
+
+
               </div>
             </div>
             <div className="chat-header mb-1">
