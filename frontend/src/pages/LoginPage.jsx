@@ -18,7 +18,23 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen grid lg:grid-cols-2">
+    <div className="min-h-screen grid lg:grid-cols-2 relative overflow-hidden">
+
+      {/* animated blobs */}
+      <div
+        className="absolute w-[600px] h-[600px] bg-primary opacity-30 rounded-full filter blur-3xl animate-blob"
+        style={{ top: "-10%", left: "-10%" }}
+      />
+      <div
+        className="absolute w-[500px] h-[500px] bg-secondary opacity-35 rounded-full filter blur-2xl animate-blob animation-delay-2000"
+        style={{ top: "0%", right: "-15%" }}
+      />
+      <div
+        className="absolute w-[550px] h-[550px] bg-accent opacity-20 rounded-full filter blur-2xl animate-blob animation-delay-4000"
+        style={{ top: "50%", right: "24%" }}
+      />
+
+
       {/* Left Side - Form */}
       <div className="flex flex-col justify-center items-center p-6 sm:p-12">
         <div className="w-full max-w-md space-y-8">

@@ -10,7 +10,12 @@ const Navbar = () => {
       className="bg-base-100 border-b border-base-300 fixed w-full top-0 z-40 
     backdrop-blur-lg  transition-all duration-200"
     >
-      <div className="container mx-auto px-4 h-16">
+
+      
+
+      <div className="container mx-auto px-4 h-16 ">
+
+
         <div className="flex items-center justify-between h-full">
           <div className="flex items-center gap-8">
             <Link to="/" className="flex items-center gap-2.5 hover:opacity-80 transition-all">
