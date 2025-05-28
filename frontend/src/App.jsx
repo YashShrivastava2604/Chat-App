@@ -14,6 +14,7 @@ import { useEffect } from "react";
 
 import { Loader } from "lucide-react";
 import { Bounce, ToastContainer } from "react-toastify";
+// import { useChatStore } from './store/useChatStore';
 
 // import { EmailVerification } from "./components/EmailVerification";
 
@@ -35,6 +36,8 @@ const App = () => {
         <Loader className="size-10 animate-spin" />
       </div>
     );
+
+
 
   return (
     <div data-theme={theme}>
