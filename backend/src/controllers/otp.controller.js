@@ -1,46 +1,53 @@
 import bcrypt from "bcryptjs";
-import { Resend } from "resend";
 import dotenv from "dotenv";
 import { generateToken } from "../lib/utils.js";
 import User from "../models/user.model.js";
+import nodemailer from "nodemailer";
 
 dotenv.config();
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 const otpStore = new Map(); // email → { fullName, email, password, otp, expiresAt }
 
-export const sendOTP =  async (req, res) => {
+export const sendOTP = async (req, res) => {
   const { fullName, email, password } = req.body;
+
+  // 1️⃣ Validate inputs
   if (!fullName || !email || !password) {
     return res.status(400).json({ message: "All fields are required" });
   }
-  if (await User.exists({ email })) {
-    return res.status(400).json({ message: "Email already in use" });
-  }
 
-  // Generate OTP
+  // 2️⃣ Generate a 6-digit OTP and expiry
   const otp = Math.floor(100000 + Math.random() * 900000).toString();
-  const expiresAt = Date.now() + 10 * 60 * 1000; // 10 min
+  const expiresAt = Date.now() + 10 * 60 * 1000; // 10 minutes
 
-  // Send via Resend
+  // 3️⃣ Store the record for later verification
+  otpStore.set(email, { fullName, email, password, otp, expiresAt });
+
+  // 4️⃣ Email the generated OTP
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.GMAIL_USER,
+      pass: process.env.GMAIL_APP_PASSWORD,
+    },
+  });
+
   try {
-    await resend.emails.send({
-      from: "onboarding@resend.dev",
+    await transporter.sendMail({
+      from: process.env.GMAIL_USER,
       to: email,
       subject: "Your OTP Code",
-      html: `<p>Your OTP is <strong>${otp}</strong>. It expires in 10 minutes.</p>`,
+      text: `Your OTP is ${otp}`,  // now uses the server‐generated OTP
     });
+    return res.status(200).json({ message: "OTP sent successfully" });
   } catch (err) {
-    console.error("Resend error:", err);
-    return res.status(500).json({ message: "Failed to send OTP email" });
+    console.error("Error sending OTP:", err);
+    return res.status(500).json({ message: "Failed to send OTP" });
   }
+};
 
-  // Store pending user
-  otpStore.set(email, { fullName, email, password, otp, expiresAt });
-  return res.status(200).json({ message: "OTP sent" });
-}
 
-export const verifyOPT =  async (req, res) => {
+export const verifyOTP =  async (req, res) => {
   const { email, otp } = req.body;
   const record = otpStore.get(email);
   if (!record) {
