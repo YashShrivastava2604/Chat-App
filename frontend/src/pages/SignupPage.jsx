@@ -116,7 +116,7 @@ export default function SignUpPage() {
                     />
                     <button
                       type="button"
-                      className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                      className="absolute z-20 inset-y-0 right-0 pr-3 flex items-center"
                       onClick={() => setShowPassword(!showPassword)}
                     >
                       {showPassword ? (
@@ -143,7 +143,7 @@ export default function SignUpPage() {
 
             <button
               type="submit"
-              className="btn btn-primary w-full z-12"
+              className="btn btn-primary w-full z-15"
               disabled={isSigningUp}
             >
               {isSigningUp ? (

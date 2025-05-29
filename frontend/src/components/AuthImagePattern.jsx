@@ -5,7 +5,7 @@ import chatAnimation from "../assets/lottie/chat-bubbles.json";
 
 const AuthImagePattern = ({ title, subtitle }) => {
   return (
-    <div className="hidden lg:flex flex-col relative w-full h-screen items-center justify-center overflow-hidden">
+    <div className="hidden lg:flex flex-col relative w-full h-screen items-center justify-center overflow-hidden pt-12">
       
 
       {/* your Lottie */}
