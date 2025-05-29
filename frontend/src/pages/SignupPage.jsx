@@ -33,15 +33,15 @@ export default function SignUpPage() {
 
       {/* animated blobs */}
       <div
-        className="absolute w-[600px] h-[600px] bg-primary opacity-30 rounded-full filter blur-3xl animate-blob"
+        className="absolute w-[600px] h-[600px] bg-primary opacity-30 rounded-full filter blur-3xl animate-blob pointer-events-none z-0"
         style={{ top: "-10%", left: "-10%" }}
       />
       <div
-        className="absolute w-[500px] h-[500px] bg-secondary opacity-35 rounded-full filter blur-2xl animate-blob animation-delay-2000"
+        className="absolute w-[500px] h-[500px] bg-secondary opacity-35 rounded-full filter blur-2xl animate-blob animation-delay-2000 pointer-events-none z-0"
         style={{ top: "0%", right: "-15%" }}
       />
       <div
-        className="absolute w-[550px] h-[550px] bg-accent opacity-20 rounded-full filter blur-2xl animate-blob animation-delay-4000"
+        className="absolute w-[550px] h-[550px] bg-accent opacity-20 rounded-full filter blur-2xl animate-blob animation-delay-4000 pointer-events-none z-0"
         style={{ top: "50%", right: "24%" }}
       />
 
@@ -143,7 +143,7 @@ export default function SignUpPage() {
 
             <button
               type="submit"
-              className="btn btn-primary w-full z-15"
+              className="btn btn-primary w-full z-100"
               disabled={isSigningUp}
             >
               {isSigningUp ? (

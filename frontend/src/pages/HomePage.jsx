@@ -13,15 +13,15 @@ const HomePage = () => {
       <div className="min-h-screen bg-base-200 overflow-hidden">
       {/* animated blobs */}
       <div
-      className="fixed w-[600px] h-[600px] bg-primary opacity-20 rounded-full filter blur-3xl animate-blob"
+      className="fixed w-[600px] h-[600px] bg-primary opacity-20 rounded-full filter blur-3xl animate-blob pointer-events-none z-0"
       style={{ top: "-10%", left: "-10%" }}
       />
       <div
-      className="fixed w-[500px] h-[500px] bg-secondary opacity-30 rounded-full filter blur-2xl animate-blob animation-delay-2000"
+      className="fixed w-[500px] h-[500px] bg-secondary opacity-30 rounded-full filter blur-2xl animate-blob animation-delay-2000 pointer-events-none z-0"
       style={{ top: "0%", right: "-15%" }}
       />
       <div
-      className="fixed w-[550px] h-[550px] bg-accent opacity-15 rounded-full filter blur-2xl animate-blob animation-delay-4000"
+      className="fixed w-[550px] h-[550px] bg-accent opacity-15 rounded-full filter blur-2xl animate-blob animation-delay-4000 pointer-events-none z-0"
       style={{ top: "50%", right: "24%" }}
       />
 
