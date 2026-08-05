@@ -20,8 +20,13 @@ const allowedOrigins = [
   "https://chat-app-roan-psi-37.vercel.app/",
 ];
 
+app.use((req, res, next) => {
+  console.log("Origin:", req.headers.origin);
+  next();
+});
+
 app.use(cors({
-  origin: allowedOrigins,
+  origin: true,
   credentials: true,
 }));
 
