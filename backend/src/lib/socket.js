@@ -15,8 +15,13 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 app.use(express.json());
 app.use(cookieParser());
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://chat-app-ruddy-eta-55.vercel.app/",
+];
+
 app.use(cors({
-  origin: ["http://localhost:5173"],
+  origin: allowedOrigins,
   credentials: true,
 }));
 
@@ -27,7 +32,8 @@ app.use("/api/verify", verifyRoute);
 
 const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:5173"],
+    origin: allowedOrigins,
+    credentials: true,
   },
 });
 
