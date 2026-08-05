@@ -26,8 +26,6 @@ app.use(
   })
 );
 
-app.options("/.*/", cors());
-
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/verify", verifyRoute);

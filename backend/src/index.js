@@ -18,6 +18,7 @@ const __dirname = path.resolve();
 //   });
 
 // }
+app.set("trust proxy", 1);
 
 server.listen(PORT, () => {
   console.log("server is running on PORT:" + PORT);
