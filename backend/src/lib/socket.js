@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(cookieParser());
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://chat-app-ruddy-eta-55.vercel.app",
+  "https://chat-app-roan-psi-37.vercel.app/",
 ];
 
 app.use(cors({
