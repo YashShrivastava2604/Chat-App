@@ -7,6 +7,7 @@ import SidebarSkeleton from "./skeletons/SidebarSkeleton";
 const Sidebar = () => {
   const { getUsers, users, selectedUser, setSelectedUser, isUsersLoading } = useChatStore();
   const { onlineUsers } = useAuthStore();
+  const { getMessages } = useChatStore();
 
   const [showOnlineOnly, setShowOnlineOnly] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -32,6 +33,14 @@ const Sidebar = () => {
   }, [users, onlineUsers, showOnlineOnly, searchTerm]);
 
   if (isUsersLoading) return <SidebarSkeleton />;
+
+
+  const getLatestMessage = (userId) => {
+    
+    return (
+      <span className="font-bold">HELLO</span>
+    )
+  }
 
   return (
     <aside className="h-full w-20 lg:w-72 border-r border-base-300 flex flex-col transition-all duration-200 z-20">
@@ -69,36 +78,41 @@ const Sidebar = () => {
       {/* User list */}
       <div className="overflow-y-auto flex-1 py-3">
         {filteredUsers.length > 0 ? (
-          filteredUsers.map((user) => (
-            <button
-              key={user._id}
-              onClick={() => setSelectedUser(user)}
-              className={`
-                w-full p-3 flex items-center gap-3
-                hover:bg-base-300 transition-colors
-                ${selectedUser?._id === user._id ? "bg-base-300 ring-1 ring-base-300" : ""}
-              `}
-            >
-              {/* avatar + status */}
-              <div className="relative">
-                <img
-                  src={user.profilePic || "/avatar.png"}
-                  alt={user.fullName}
-                  className="size-14 object-cover rounded-full"
-                  style={{ objectPosition: user.profilePicPosition || "center" }}
-                />
-                {onlineUsers.includes(user._id) && (
-                  <span className="absolute bottom-0 right-0 size-3 bg-green-500 rounded-full ring-2 ring-zinc-900" />
-                )}
-              </div>
-              <div className="hidden lg:block min-w-0 text-left">
-                <div className="font-medium truncate">{user.fullName}</div>
-                <div className="text-sm text-zinc-400">
-                  {onlineUsers.includes(user._id) ? "Online" : "Offline"}
+          filteredUsers.map((user) => {
+            const latestMessage = getLatestMessage(user._id);
+            return (
+              <button
+                key={user._id}
+                onClick={() => setSelectedUser(user)}
+                className={`
+                  w-full p-3 flex items-center gap-3
+                  hover:bg-base-300 transition-colors
+                  ${selectedUser?._id === user._id ? "bg-base-300 ring-1 ring-base-300" : ""}
+                `}
+              >
+                {/* avatar + status */}
+                <div className="relative">
+                  <img
+                    src={user.profilePic || "/avatar.png"}
+                    alt={user.fullName}
+                    className="size-14 object-cover rounded-full"
+                    style={{ objectPosition: user.profilePicPosition || "center" }}
+                  />
+                  {onlineUsers.includes(user._id) && (
+                    <span className="absolute bottom-0 right-0 size-3 bg-green-500 rounded-full ring-2 ring-zinc-900" />
+                  )}
                 </div>
-              </div>
-            </button>
-          ))
+                <div className="hidden lg:block min-w-0 text-left">
+                  <div className="font-medium truncate">{user.fullName}</div>
+                  <div className="text-sm text-zinc-400 truncate">
+                    {latestMessage
+                      ? latestMessage
+                      : <span className="italic text-zinc-400">No messages yet</span>}
+                  </div>
+                </div>
+              </button>
+            );
+          })
         ) : (
           <div className="text-center text-zinc-500 py-4">
             {showOnlineOnly
