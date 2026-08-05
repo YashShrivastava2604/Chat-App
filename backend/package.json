@@ -39,9 +39,10 @@
     "undefsafe": "^2.0.5"
   },
   "scripts": {
-  "start": "node src/index.js",
-  "dev": "nodemon src/index.js"
-},
+    "build": "npm run build",
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
